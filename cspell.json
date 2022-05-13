@@ -1,0 +1,21 @@
+{
+	"version": "0.2",
+	"language": "en-US",
+	"words": [
+		"Appender",
+		"appenders",
+		"openapi",
+		"todos"
+	],
+	"ignoreRegExpList": [
+		"/import\\s+?(?:(?:(?:[\\w*\\s{},]*)\\s+from\\s+?)|)(?:(?:\".*?\")|(?:'.*?'))[\\s]*?(?:;|$|)/"
+	],
+	"ignorePaths": [
+		"src/**/*.md",
+		"node_modules/**",
+		"package.json",
+		"package-lock.json",
+		"coverage/**",
+		"/deployment/terraform/**"
+	]
+}

@@ -1,0 +1,38 @@
+name: Continuous integration
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Create mongoDB Docker container for API testing
+        uses: DigiPie/mongo-action@v1.0.1
+      - name: Install npm packages
+        run: npm install
+
+      - name: Run `npm run build` to build Typescript into Javascript
+        run: npm run build
+
+      - name: Run `npm test`
+        run: npm test
+
+        env:
+          CI: true
+          PORT: 5111
+          DB_URI: mongodb://localhost:27017/test
+          JWT_PRIVATE_KEY: "0P3N_5353M3"
+          JWT_EXPIRY_TIME: "365d"
