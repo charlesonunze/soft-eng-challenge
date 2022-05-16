@@ -5,12 +5,11 @@ import {
 	QueryOptions,
 	FilterQuery
 } from 'mongoose';
-import { anyObject } from '../@types';
 
 class BaseRepo<T extends Document> {
 	protected constructor(private model: Model<T>) {}
 
-	async insertOne(data: anyObject) {
+	async insertOne(data: T) {
 		return await this.model.create(data);
 	}
 
@@ -41,10 +40,10 @@ class BaseRepo<T extends Document> {
 	async findOneAndUpdate(
 		findQuery: FilterQuery<T>,
 		updateQuery: UpdateQuery<T>,
-		options: QueryOptions
+		options?: QueryOptions
 	) {
 		return this.model
-			.findOneAndUpdate(findQuery, updateQuery, options)
+			.findOneAndUpdate(findQuery, updateQuery, { ...options, new: true })
 			.lean()
 			.exec();
 	}

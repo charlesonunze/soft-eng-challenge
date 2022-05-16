@@ -1,6 +1,6 @@
 import Joi, { ValidationError as InputError } from 'joi';
-import { ValidationError } from '../utils/errorHandler';
-import { anyObject } from '../@types';
+import { ValidationError } from '../../utils/errorHandler';
+import { anyObject } from '../../@types';
 
 export const handleValidationError = (error: InputError) => {
 	const { details } = error;

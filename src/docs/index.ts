@@ -1,12 +1,11 @@
 import { components } from './components';
-import { todoDocs } from './todos';
+import { crewDocs } from '../domain/crew/docs';
 
 const swaggerDocs = {
 	openapi: '3.0.0',
 	info: {
-		version: '1.0.3',
-		title: 'TODO REST API',
-		description: 'Official documentation for TODO REST API.'
+		version: '1.0.0',
+		title: 'Pirates of the Caribbean'
 	},
 	schemes: [],
 	servers: [
@@ -17,7 +16,7 @@ const swaggerDocs = {
 	],
 
 	paths: {
-		'/todos': todoDocs
+		'/crew': crewDocs
 	},
 
 	components: components

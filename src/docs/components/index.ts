@@ -22,6 +22,17 @@ export const components = {
 					type: 'string'
 				}
 			}
+		},
+
+		CrewBody: {
+			properties: {
+				name: {
+					type: 'string'
+				},
+				ship: {
+					type: 'string'
+				}
+			}
 		}
 	}
 };
