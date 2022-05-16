@@ -1,8 +1,8 @@
 import { Document, Schema, model, Types } from 'mongoose';
 
 interface CrewMember {
-	name: string;
-	ship: string;
+	name?: string;
+	ship?: string;
 	createdAt?: Date;
 }
 

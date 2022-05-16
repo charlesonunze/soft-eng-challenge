@@ -59,6 +59,7 @@ class CrewHandler {
 
 		await shipService.removeCrewMember(from_ship._id, crew_member._id);
 		await shipService.addCrewMember(to_ship._id, crew_member._id);
+		await crewService.editCrewMember(crew_member._id, { ship: to_ship._id });
 
 		return sendResponse({
 			res,

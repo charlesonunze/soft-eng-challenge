@@ -8,7 +8,7 @@ import shipService from '../../src/domain/ship/service';
 import crewService from '../../src/domain/crew/service';
 import { generateObjectID, generateRandomName } from '../../src/utils/faker';
 
-const { SHIP_CAPACITY } = process.env;
+const { SHIP_CAPACITY, STARTING_CREW_NUMBER } = process.env;
 
 describe('CREW API', () => {
 	afterEach((done) => {
@@ -17,9 +17,8 @@ describe('CREW API', () => {
 	});
 
 	after(async () => {
-		//  clean up db
+		// clean up db
 		const collections = await mongoose.connection.db.collections();
-
 		for (const c of collections) {
 			await c.deleteMany({});
 		}
@@ -52,7 +51,7 @@ describe('CREW API', () => {
 			const ship = await shipService.createShip({ name: 'Black Pearl' });
 			const shipID = ship?._id;
 
-			const count = parseInt(SHIP_CAPACITY!);
+			const count = parseInt(SHIP_CAPACITY!) - parseInt(STARTING_CREW_NUMBER!);
 
 			// fill up ship
 			for (let i = 0; i < count; i++) {
@@ -93,7 +92,7 @@ describe('CREW API', () => {
 			);
 			expect(res.body.data.crew_member.name).to.equal(data.name);
 			expect(res.body.data.crew_member.ship).to.equal(data.ship);
-			expect(updatedShip?.crew.length).to.equal(1);
+			expect(updatedShip?.crew.length).to.equal(4);
 		});
 	});
 
@@ -214,7 +213,7 @@ describe('CREW API', () => {
 			const to_ship = await shipService.createShip({ name: 'Dauntless' });
 			const to_shipID = to_ship?._id;
 
-			const count = parseInt(SHIP_CAPACITY!);
+			const count = parseInt(SHIP_CAPACITY!) - parseInt(STARTING_CREW_NUMBER!);
 			// fill up ship
 			for (let i = 0; i < count; i++) {
 				const crewMember = await crewService.addCrewMember({
@@ -261,11 +260,13 @@ describe('CREW API', () => {
 
 			const updatedFromShip = await shipService.getShip(from_shipID);
 			const updatedToShip = await shipService.getShip(to_shipID);
+			const updatedCrewMember = await crewService.getCrewMember(crewMember._id);
 
 			expect(res.status).to.equal(200);
 			expect(res.body.success).to.equal(true);
-			expect(updatedFromShip?.crew.length).to.equal(0);
-			expect(updatedToShip?.crew.length).to.equal(1);
+			expect(updatedFromShip?.crew.length).to.equal(3);
+			expect(updatedToShip?.crew.length).to.equal(4);
+			expect(updatedCrewMember?.ship.toString()).to.equal(to_shipID.toString());
 			expect(res.body.message).to.include(
 				`Crew member has been moved to the ${to_ship?.name} from the ${from_ship?.name}`
 			);
