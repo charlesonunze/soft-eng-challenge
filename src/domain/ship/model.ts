@@ -3,14 +3,14 @@ import { CrewMember } from '../crew/model';
 
 interface Ship {
 	name: string;
-	crew?: CrewMember[];
+	crew?: Types.ObjectId[];
 	crewCount?: number;
 	createdAt?: Date;
 }
 
 interface IShip extends Document {
 	name: string;
-	crew: CrewMember[];
+	crew: Types.ObjectId[];
 	crewCount: number;
 	createdAt?: Date;
 }

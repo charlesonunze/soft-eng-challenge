@@ -17,6 +17,7 @@ describe('CREW API', () => {
 	});
 
 	after(async () => {
+		//  clean up db
 		const collections = await mongoose.connection.db.collections();
 
 		for (const c of collections) {
@@ -59,7 +60,7 @@ describe('CREW API', () => {
 					name: generateRandomName(),
 					ship: shipID
 				});
-				await shipService.addCrew(shipID, crewMember._id);
+				await shipService.addCrewMember(shipID, crewMember._id);
 			}
 
 			const res = await request(app).post(`${baseURL}/crew`).send({
@@ -90,8 +91,8 @@ describe('CREW API', () => {
 			expect(res.body.message).to.equal(
 				`New crew member added to the ${ship.name}`
 			);
-			expect(res.body.data.crewMember.name).to.equal(data.name);
-			expect(res.body.data.crewMember.ship).to.equal(data.ship);
+			expect(res.body.data.crew_member.name).to.equal(data.name);
+			expect(res.body.data.crew_member.ship).to.equal(data.ship);
 			expect(updatedShip?.crew.length).to.equal(1);
 		});
 	});

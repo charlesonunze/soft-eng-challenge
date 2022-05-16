@@ -45,7 +45,7 @@ class ShipService {
 		return this.shipRepo.findOne({ _id: id });
 	}
 
-	async addCrew(id: string, crew: CrewMember) {
+	async addCrewMember(id: string, crew: CrewMember) {
 		return await this.shipRepo.findOneAndUpdate(
 			{ _id: id },
 			{

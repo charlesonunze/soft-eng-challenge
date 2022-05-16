@@ -19,13 +19,13 @@ class CrewHandler {
 		if (ship.crewCount === capacity) throw new UserError('Ship is full');
 
 		const crewMember = await crewService.addCrewMember(value);
-		await shipService.addCrew(ship._id, crewMember._id);
+		await shipService.addCrewMember(ship._id, crewMember._id);
 
 		return sendResponse({
 			res,
 			statusCode: 201,
 			message: `New crew member added to the ${ship.name}`,
-			data: { crewMember }
+			data: { crew_member: crewMember }
 		});
 	};
 }
