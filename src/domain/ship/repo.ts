@@ -7,4 +7,4 @@ class ShipRepo extends BaseRepo<IShip> {
 	}
 }
 
-export default ShipRepo;
+export default new ShipRepo();

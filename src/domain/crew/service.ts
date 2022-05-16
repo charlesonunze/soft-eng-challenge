@@ -1,23 +1,17 @@
-import CrewRepo from './repo';
+import crewRepo from './repo';
 import { CrewMember, ICrewMember } from './model';
 
 class CrewService {
-	private crewRepo: CrewRepo;
-
-	constructor() {
-		this.crewRepo = new CrewRepo();
-	}
-
 	async addCrewMember(data: CrewMember) {
-		return await this.crewRepo.insertOne(data as ICrewMember);
+		return await crewRepo.insertOne(data as ICrewMember);
 	}
 
 	async getCrewMember(id: string) {
-		return this.crewRepo.findOne({ _id: id });
+		return crewRepo.findOne({ _id: id });
 	}
 
 	async editCrewMember(id: string, data: CrewMember) {
-		return await this.crewRepo.findOneAndUpdate(
+		return await crewRepo.findOneAndUpdate(
 			{ _id: id },
 			{ $set: data },
 			{ new: true }
@@ -25,7 +19,7 @@ class CrewService {
 	}
 
 	async deleteCrewMember(id: string) {
-		return await this.crewRepo.deleteOne({ _id: id });
+		return await crewRepo.deleteOne({ _id: id });
 	}
 }
 

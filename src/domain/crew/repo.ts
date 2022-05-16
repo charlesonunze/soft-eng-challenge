@@ -7,4 +7,4 @@ class CrewMemberRepo extends BaseRepo<ICrewMember> {
 	}
 }
 
-export default CrewMemberRepo;
+export default new CrewMemberRepo();

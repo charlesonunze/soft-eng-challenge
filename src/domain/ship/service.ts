@@ -1,6 +1,6 @@
-import ShipRepo from './repo';
+import shipRepo from './repo';
 import { IShip, Ship } from './model';
-import CrewRepo from '../crew/repo';
+import crewRepo from '../crew/repo';
 import { CrewMember, ICrewMember } from '../crew/model';
 import { generateRandomName } from '../../utils/faker';
 import { Types } from 'mongoose';
@@ -8,16 +8,8 @@ import { Types } from 'mongoose';
 const { STARTING_CREW_NUMBER } = process.env;
 
 class ShipService {
-	private shipRepo: ShipRepo;
-	private crewRepo: CrewRepo;
-
-	constructor() {
-		this.shipRepo = new ShipRepo();
-		this.crewRepo = new CrewRepo();
-	}
-
 	async createShip(data: Ship) {
-		const ship = await this.shipRepo.insertOne(data as IShip);
+		const ship = await shipRepo.insertOne(data as IShip);
 
 		// const startingCrewNumber = parseInt(STARTING_CREW_NUMBER!);
 		// const crewCount = startingCrewNumber;
@@ -43,15 +35,15 @@ class ShipService {
 	}
 
 	async getShip(id: string) {
-		return this.shipRepo.findOne({ _id: id });
+		return shipRepo.findOne({ _id: id });
 	}
 
 	async findCrewMember(id: string, crewMember: Types.ObjectId) {
-		return this.shipRepo.findOne({ _id: id, crew: { $in: [crewMember] } });
+		return shipRepo.findOne({ _id: id, crew: { $in: [crewMember] } });
 	}
 
 	async addCrewMember(id: string, crew: CrewMember) {
-		return await this.shipRepo.findOneAndUpdate(
+		return await shipRepo.findOneAndUpdate(
 			{ _id: id },
 			{
 				$push: {
@@ -81,7 +73,7 @@ class ShipService {
 	}
 
 	async deleteShip(id: string) {
-		return await this.shipRepo.deleteOne({ _id: id });
+		return await shipRepo.deleteOne({ _id: id });
 	}
 }
 
