@@ -1,9 +1,14 @@
 import { RequestHandler } from 'express';
-import { handleValidationError, validateCrewInput } from './validator';
+import {
+	handleValidationError,
+	validateCrewInput,
+	validateSwitchCrewInput
+} from './validator';
 import { NotFoundError, UserError } from '../../utils/errorHandler';
 import crewService from './service';
 import shipService from '../ship/service';
 import { sendResponse } from '../../utils/response';
+import { Types } from 'mongoose';
 
 const { SHIP_CAPACITY } = process.env;
 
@@ -26,6 +31,38 @@ class CrewHandler {
 			statusCode: 201,
 			message: `New crew member added to the ${ship.name}`,
 			data: { crew_member: crewMember }
+		});
+	};
+
+	handleSwitchCrewMember: RequestHandler = async (req, res) => {
+		const { error, value } = validateSwitchCrewInput(req.body);
+		if (error) return handleValidationError(error);
+
+		const crew_member = await crewService.getCrewMember(value.crew_member);
+		if (!crew_member) throw new NotFoundError('Crew member not found');
+
+		const from_ship = await shipService.getShip(value.from_ship);
+		if (!from_ship) throw new NotFoundError('Ship not found');
+
+		const to_ship = await shipService.getShip(value.to_ship);
+		if (!to_ship) throw new NotFoundError('Ship not found');
+
+		const doc = await shipService.findCrewMember(
+			from_ship._id,
+			Types.ObjectId(value.crew_member)
+		);
+		if (!doc) throw new UserError('Crew member is not on this ship');
+
+		const capacity = parseInt(SHIP_CAPACITY!);
+		if (to_ship.crewCount === capacity)
+			throw new UserError('Destination ship is full');
+
+		await shipService.removeCrewMember(from_ship._id, crew_member._id);
+		await shipService.addCrewMember(to_ship._id, crew_member._id);
+
+		return sendResponse({
+			res,
+			message: `Crew member has been moved to the ${to_ship.name} from the ${from_ship.name}`
 		});
 	};
 }

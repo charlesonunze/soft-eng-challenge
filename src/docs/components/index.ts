@@ -33,6 +33,19 @@ export const components = {
 					type: 'string'
 				}
 			}
+		},
+		SwitchCrewBody: {
+			properties: {
+				crew_member: {
+					type: 'string'
+				},
+				from_ship: {
+					type: 'string'
+				},
+				to_ship: {
+					type: 'string'
+				}
+			}
 		}
 	}
 };

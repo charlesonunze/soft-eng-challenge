@@ -3,6 +3,7 @@ import { IShip, Ship } from './model';
 import CrewRepo from '../crew/repo';
 import { CrewMember, ICrewMember } from '../crew/model';
 import { generateRandomName } from '../../utils/faker';
+import { Types } from 'mongoose';
 
 const { STARTING_CREW_NUMBER } = process.env;
 
@@ -45,6 +46,10 @@ class ShipService {
 		return this.shipRepo.findOne({ _id: id });
 	}
 
+	async findCrewMember(id: string, crewMember: Types.ObjectId) {
+		return this.shipRepo.findOne({ _id: id, crew: { $in: [crewMember] } });
+	}
+
 	async addCrewMember(id: string, crew: CrewMember) {
 		return await this.shipRepo.findOneAndUpdate(
 			{ _id: id },
@@ -54,6 +59,21 @@ class ShipService {
 				},
 				$inc: {
 					crewCount: 1
+				}
+			},
+			{ new: true }
+		);
+	}
+
+	async removeCrewMember(id: string, crew: CrewMember) {
+		return await this.shipRepo.findOneAndUpdate(
+			{ _id: id },
+			{
+				$pull: {
+					crew
+				},
+				$inc: {
+					crewCount: -1
 				}
 			},
 			{ new: true }
