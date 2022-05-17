@@ -1,6 +1,7 @@
 import { expect } from 'chai';
+import { validateCrewInput } from '../../src/domain/crew/validator';
+import { handleValidationError } from '../../src/domain/packages/validators';
 import { generateObjectID, generateRandomName } from '../../src/utils/faker';
-import { handleValidationError, validateCrewInput } from '../../src/validators';
 
 describe('VALIDATOR FUNCTIONS', () => {
 	afterEach((done) => {

@@ -1,14 +1,13 @@
-import './config';
 import express from 'express';
-import { logger } from './utils/main.logger';
-import { connectDB } from './startup/db';
-import { loadRoutes } from './startup/routes';
+import './startup/config';
 import { loadMiddleware } from './startup/middleware';
+import { loadRoutes } from './startup/routes';
+import { connectDB } from './startup/db';
 import { NotFoundErrorHandler, ServerErrorHandler } from './utils/errorHandler';
+import { logger } from './utils/main.logger';
 
 const app = express();
 
-// Load Middleware
 loadMiddleware(app);
 loadRoutes(app);
 connectDB();

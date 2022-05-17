@@ -1,14 +1,11 @@
 import { RequestHandler } from 'express';
-import {
-	handleValidationError,
-	validateCrewInput,
-	validateSwitchCrewInput
-} from './validator';
 import { NotFoundError, UserError } from '../../utils/errorHandler';
 import crewService from './service';
 import shipService from '../ship/service';
 import { sendResponse } from '../../utils/response';
 import { Types } from 'mongoose';
+import { handleValidationError } from '../packages/validators';
+import { validateCrewInput, validateSwitchCrewInput } from './validator';
 
 const { SHIP_CAPACITY } = process.env;
 
