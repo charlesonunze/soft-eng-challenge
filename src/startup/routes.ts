@@ -1,6 +1,6 @@
 import { Application } from 'express';
-import { crewRoutes } from '../domain/crew/route';
 import { swaggerRoute } from '../docs/route';
+import { crewRoutes } from '../domain/crew/route';
 import { mothershipRoutes } from '../domain/mothership/route';
 
 export const loadRoutes = (app: Application) => {

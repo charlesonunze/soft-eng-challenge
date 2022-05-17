@@ -2,6 +2,7 @@ import mothershipRepo from './repo';
 import shipService from '../ship/service';
 import { Mothership, IMothership } from './model';
 import { generateRandomName } from '../../utils/faker';
+import { Types } from 'mongoose';
 
 const { STARTING_SHIP_NUMBER } = process.env;
 
@@ -32,6 +33,40 @@ class MothershipService {
 		);
 
 		return updatedShip;
+	}
+
+	async addShip(id: string, ship: Types.ObjectId) {
+		return await mothershipRepo.findOneAndUpdate(
+			{ _id: id },
+			{
+				$push: {
+					ships: ship
+				},
+				$inc: {
+					shipCount: 1
+				}
+			},
+			{ new: true }
+		);
+	}
+
+	async removeShip(id: string, ship: Types.ObjectId) {
+		return await mothershipRepo.findOneAndUpdate(
+			{ _id: id },
+			{
+				$pull: {
+					ships: ship
+				},
+				$inc: {
+					shipCount: -1
+				}
+			},
+			{ new: true }
+		);
+	}
+
+	async findShip(id: string, ship: Types.ObjectId) {
+		return await mothershipRepo.findOne({ _id: id, ships: { $in: [ship] } });
 	}
 
 	async getMothership(id: string) {

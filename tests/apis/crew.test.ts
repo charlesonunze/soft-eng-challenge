@@ -202,7 +202,7 @@ describe('CREW API', () => {
 				to_ship: to_ship?._id
 			});
 
-			expect(res.status).to.equal(400);
+			expect(res.status).to.equal(404);
 			expect(res.body.success).to.equal(false);
 			expect(res.body.message).to.include('Crew member is not on this ship');
 		});

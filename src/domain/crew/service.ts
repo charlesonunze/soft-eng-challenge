@@ -21,6 +21,10 @@ class CrewService {
 	async deleteCrewMember(id: string) {
 		return await crewRepo.deleteOne({ _id: id });
 	}
+
+	async deleteManyCrewMembers(id: string) {
+		return await crewRepo.deleteMany({ ship: id });
+	}
 }
 
 export default new CrewService();

@@ -48,7 +48,7 @@ class CrewHandler {
 			from_ship._id,
 			Types.ObjectId(value.crew_member)
 		);
-		if (!doc) throw new UserError('Crew member is not on this ship');
+		if (!doc) throw new NotFoundError('Crew member is not on this ship');
 
 		const capacity = parseInt(SHIP_CAPACITY!);
 		if (to_ship.crewCount === capacity)

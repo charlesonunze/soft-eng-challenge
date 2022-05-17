@@ -46,6 +46,36 @@ export const components = {
 					type: 'string'
 				}
 			}
+		},
+
+		AddMothershipBody: {
+			properties: {
+				name: {
+					type: 'string'
+				}
+			}
+		},
+
+		AddShipBody: {
+			properties: {
+				mothership: {
+					type: 'string'
+				},
+				num_of_ships: {
+					type: 'number'
+				}
+			}
+		},
+
+		RemoveShipBody: {
+			properties: {
+				mothership: {
+					type: 'string'
+				},
+				ship: {
+					type: 'string'
+				}
+			}
 		}
 	}
 };

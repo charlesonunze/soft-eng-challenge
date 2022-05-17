@@ -15,7 +15,7 @@ interface ICrewMember extends Document {
 const schema = new Schema(
 	{
 		name: { type: String, trim: true },
-		ship: { type: Types.ObjectId }
+		ship: { type: Types.ObjectId, ref: 'Ship' }
 	},
 	{ timestamps: true }
 );
