@@ -1,41 +1,47 @@
-# Software Engineering Challenge
-Challenge for selecting Software engineers.
+# Project Title
 
-To complete this challenge you will need to:
-- Fork this repository.
-- Create an application.
-- Implement CI pipeline.
+A brief description of what this project does and who it's for
 
-## API development
-### Description
-They have been always here, but we have never seen them. This API will be used by the Human Air Forces to defend the world against the alian invasion.
+## Run Locally
 
-The API needs to have three entities:
-- Mothership {ship capacity: 9}
-- Ship {crew member capacity: 5}
-- CrewMember
+Clone the project
 
-Mothership has many ships.
-Ships has Mana CrewMembers.
-### Acceptance criteria
-- Given that the officer wants to add a mothership, when he adds a mothership, then the mothership will be created with three ships
-- Given that the mothership was created, when the ship is created, then ship will create three crew members
-- Given that the officer wants to add a ship to a mothership, when he sends which mother ship and how much ships he wants to add, then ships will be created with three crew members each one if the mothership contains less than 9 ships
-- Given that the officer wants to remove a ship, when he tries he send which ship he wants to remove, then the ship will be removed along with all its crew members
-- Given that the officer wants to add a crew member, when he sends the name of the member and the ship he wants to add, then the crew member is added if the ship contains less than 5 crew members
-- When the officer tries to add more ships or crew members over the capacities, then an error is raised pointing out what is wrong
-- Given that the officer wants to switch a crew member between the ships, when he sends the from_ship and the to_ship and the name of the crew member, then the action will be allowed only if the to_ship will not exceed the capacity
-### Definition of Done
-Complete the following checklist
-1. Remove duplicated or unnecessary code
-2. Avoid hardcoded values
-3. No unnecessary comments
-4. Unit test implemented checking custom behaviors and business rules
-5. API Documentation
-    1. Action | route
-    2. Description
-    3. URL Parameters
-    4. Request Params
-    5. Request body
-    6. Response body
-    7. Status code
+```bash
+  git clone https://github.com/charlesonunze/soft-eng-challenge
+```
+
+Go to the project directory
+
+```bash
+  cd soft-eng-challenge
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the server
+
+```bash
+  make dev
+```
+
+Watch for file changes
+
+```bash
+  make watch
+```
+
+Run tests
+
+```bash
+  make test
+```
+
+## Documentation
+
+[Click here to view the docs](http://localhost:5000/api/docs)
+
+Please make sure you have the dev server running on port 5000

@@ -34,5 +34,7 @@ jobs:
           CI: true
           PORT: 5111
           DB_URI: mongodb://localhost:27017/test
-          JWT_PRIVATE_KEY: "0P3N_5353M3"
-          JWT_EXPIRY_TIME: "365d"
+          STARTING_CREW_NUMBER: 3
+          SHIP_CAPACITY: 5
+          STARTING_SHIP_NUMBER: 3
+          MOTHERSHIP_CAPACITY: 9
