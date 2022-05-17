@@ -1,6 +1,7 @@
 import { Application } from 'express';
 import { crewRoutes } from '../domain/crew/route';
 import { swaggerRoute } from '../docs/route';
+import { mothershipRoutes } from '../domain/mothership/route';
 
 export const loadRoutes = (app: Application) => {
 	// Root Route
@@ -10,6 +11,7 @@ export const loadRoutes = (app: Application) => {
 
 	// API Routes
 	app.use('/api/v1', crewRoutes);
+	app.use('/api/v1', mothershipRoutes);
 
 	// Swagger Docs
 	app.use('/api/docs', swaggerRoute);

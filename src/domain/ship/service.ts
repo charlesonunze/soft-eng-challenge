@@ -1,9 +1,9 @@
+import { Types } from 'mongoose';
 import shipRepo from './repo';
 import { IShip, Ship } from './model';
-import crewRepo from '../crew/repo';
-import { CrewMember, ICrewMember } from '../crew/model';
+import crewService from '../crew/service';
+import { CrewMember } from '../crew/model';
 import { generateRandomName } from '../../utils/faker';
-import { Types } from 'mongoose';
 
 const { STARTING_CREW_NUMBER } = process.env;
 
@@ -11,35 +11,37 @@ class ShipService {
 	async createShip(data: Ship) {
 		const ship = await shipRepo.insertOne(data as IShip);
 
-		// const startingCrewNumber = parseInt(STARTING_CREW_NUMBER!);
-		// const crewCount = startingCrewNumber;
-		// let crew = [];
+		const startingCrewNumber = parseInt(STARTING_CREW_NUMBER!);
+		const crewCount = startingCrewNumber;
+		const crew = [];
 
-		// for (let i = 0; i < startingCrewNumber; i++) {
-		// 	crew.push({ name: generateRandomName(), ship: ship.id });
-		// }
+		for (let i = 0; i < startingCrewNumber; i++) {
+			const c = await crewService.addCrewMember({
+				name: generateRandomName(),
+				ship: ship.id
+			});
+			crew.push(c._id);
+		}
 
-		// crew = await this.crewRepo.insertMany(crew as ICrewMember[]);
+		const updatedShip = await shipRepo.findOneAndUpdate(
+			{ _id: ship._id },
+			{
+				$set: {
+					crewCount,
+					crew
+				}
+			}
+		);
 
-		// const updatedShip = await this.shipRepo.findOneAndUpdate(
-		// 	{ _id: ship._id },
-		// 	{
-		// 		$set: {
-		// 			crewCount,
-		// 			crew: crew.map((c) => c.id)
-		// 		}
-		// 	}
-		// );
-
-		return ship;
+		return updatedShip;
 	}
 
 	async getShip(id: string) {
-		return shipRepo.findOne({ _id: id });
+		return await shipRepo.findOne({ _id: id });
 	}
 
 	async findCrewMember(id: string, crewMember: Types.ObjectId) {
-		return shipRepo.findOne({ _id: id, crew: { $in: [crewMember] } });
+		return await shipRepo.findOne({ _id: id, crew: { $in: [crewMember] } });
 	}
 
 	async addCrewMember(id: string, crew: CrewMember) {
@@ -58,7 +60,7 @@ class ShipService {
 	}
 
 	async removeCrewMember(id: string, crew: CrewMember) {
-		return await this.shipRepo.findOneAndUpdate(
+		return await shipRepo.findOneAndUpdate(
 			{ _id: id },
 			{
 				$pull: {
@@ -73,6 +75,7 @@ class ShipService {
 	}
 
 	async deleteShip(id: string) {
+		await crewService.deleteManyCrewMembers(id);
 		return await shipRepo.deleteOne({ _id: id });
 	}
 }

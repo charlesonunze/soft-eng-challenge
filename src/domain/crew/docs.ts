@@ -30,12 +30,10 @@ export const addCrewDocs = {
 							success: true,
 							message: 'New crew member added to the Black Pearl',
 							data: {
-								crewMember: [
-									{
-										name: 'Will Turner',
-										ship: '5ed4ae0a03155a6392e1632a'
-									}
-								]
+								crewMember: {
+									name: 'Will Turner',
+									ship: '5ed4ae0a03155a6392e1632a'
+								}
 							}
 						}
 					}

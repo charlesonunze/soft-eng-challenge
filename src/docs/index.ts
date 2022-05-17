@@ -1,5 +1,6 @@
 import { components } from './components';
 import { addCrewDocs, switchCrewDocs } from '../domain/crew/docs';
+import { addMothershipDocs } from '../domain/mothership/docs';
 
 const swaggerDocs = {
 	openapi: '3.0.0',
@@ -17,7 +18,9 @@ const swaggerDocs = {
 
 	paths: {
 		'/crew': addCrewDocs,
-		'/crew/switch': switchCrewDocs
+		'/crew/switch': switchCrewDocs,
+
+		'/mothership': addMothershipDocs
 	},
 
 	components: components
